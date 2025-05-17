@@ -63,7 +63,10 @@ flutter:
     - assets/img/mao_aberta.png
     - assets/img/mao_chacoalha.png
     - assets/img/mao_fechada.png
+    - assets/img/mao_tesoura.png
     - assets/img/tesoura.png
+    - assets/img/pedra.png
+    - assets/img/papel.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
