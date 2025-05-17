@@ -1,12 +1,10 @@
 import 'dart:math';
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(
     MaterialApp(
-      title: "Jokenpo",
+      title: "Pedra, Papel ou Tesoura",
       debugShowCheckedModeBanner: false,
       home: TelaInicial(),
     ),
@@ -19,47 +17,43 @@ class TelaInicial extends StatefulWidget {
 }
 
 class _TelaInicialState extends State<TelaInicial> {
-
-
-  List opcoes = ["pedra", "papel", "tesoura"]; 
+  List opcoes = ["pedra", "papel", "tesoura"];
   String _mensagem = "Escolha uma opção:";
   String _bot = "assets/img/homem.png";
   String? _jogadaUsuario;
   bool _jogadaFeita = false;
-  bool _animando = false;
-  double _rotacao = 0.0;
 
   void realizarJogo() {
     if (_jogadaUsuario == null) return;
 
+    int i = Random().nextInt(3);
+    String escolherAleatorio = opcoes[i];
     setState(() {
-      _animando = true;
-      _bot = "assets/img/mao_chacoalha.png";
-      _rotacao += 1.0; // para girar 360 graus
-    });
+      _bot = "assets/img/" + escolherAleatorio + ".png";
 
-    Timer(Duration(seconds: 2), () {
-      int i = Random().nextInt(3);
-      String escolherAleatorio = opcoes[i];
+      if (_jogadaUsuario == "pedra" && escolherAleatorio == "tesoura") {
+        _mensagem = "Você ganhou do bot";
+      } 
+      else if (_jogadaUsuario == "papel" && escolherAleatorio == "pedra") {
+        _mensagem = "Você ganhou do bot";
+      } 
+      else if (_jogadaUsuario == "tesoura" && escolherAleatorio == "papel") {
+        _mensagem = "Você ganhou do bot";
+      } 
+      else if (_jogadaUsuario == "pedra" && escolherAleatorio == "papel") {
+        _mensagem = "Você perdeu pro bot kkkkkkkk";
+      } 
+      else if (_jogadaUsuario == "papel" && escolherAleatorio == "tesoura") {
+        _mensagem = "Você perdeu pro bot kkkkkkkk";
+      } 
+      else if (_jogadaUsuario == "tesoura" && escolherAleatorio == "pedra") {
+        _mensagem = "Você perdeu pro bot kkkkkkkk";
+      } 
+      else {
+        _mensagem = "Deu empate 👀";
+      }
 
-      setState(() {
-        _bot = "assets/img/" + escolherAleatorio + ".png";
-
-        if (_jogadaUsuario == "pedra" && escolherAleatorio == "tesoura" ||
-            _jogadaUsuario == "papel" && escolherAleatorio == "pedra" ||
-            _jogadaUsuario == "tesoura" && escolherAleatorio == "papel") {
-          _mensagem = "Você ganhou do bot";
-        } else if (_jogadaUsuario == "pedra" && escolherAleatorio == "papel" ||
-                   _jogadaUsuario == "papel" && escolherAleatorio == "tesoura" ||
-                   _jogadaUsuario == "tesoura" && escolherAleatorio == "pedra") {
-          _mensagem = "Você perdeu pro bot kkkkkkkk";
-        } else {
-          _mensagem = "Deu empate 👀";
-        }
-
-        _jogadaFeita = true;
-        _animando = false;
-      });
+      _jogadaFeita = true;
     });
   }
 
@@ -86,35 +80,23 @@ class _TelaInicialState extends State<TelaInicial> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Padding(
-              padding: EdgeInsets.only(top:10, bottom: 0),
+              padding: EdgeInsets.only(top: 10, bottom: 0),
               child: Text(
                 "Oponente (Bot):",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold
-                ),
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
             ),
-            AnimatedRotation(
-              turns: _animando ? _rotacao : 0.0,
-              duration: Duration(milliseconds: 500),
-              child: Image.asset(_bot, height: 350),
-            ),
+            Image.asset(_bot, height: 350),
             Padding(
-              padding: EdgeInsets.only(top:50, bottom: 20),
+              padding: EdgeInsets.only(top: 50, bottom: 20),
               child: Text(
                 _mensagem,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-
                 GestureDetector(
                   onTap: () {
                     setState(() {
@@ -136,11 +118,9 @@ class _TelaInicialState extends State<TelaInicial> {
                     setState(() {
                       _jogadaUsuario = "tesoura";
                     });
-                  }, 
+                  },
                   child: Image.asset("assets/img/mao_tesoura.png", height: 100),
                 ),
-                
-
               ],
             ),
             Visibility(
@@ -150,7 +130,6 @@ class _TelaInicialState extends State<TelaInicial> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.greenAccent,
                   foregroundColor: Colors.black,
-                
                 ),
                 child: Text("Jogar"),
               ),
